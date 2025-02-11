@@ -37,18 +37,36 @@ void printStudentInfo(struct Student s) {
     printf("Итог: %d\n\n", s.total);
 }
 
-void selectionSort(int n, struct Student A[]) {
-    for (int i=0; i<n-1; i++) {
-        int k=i;
-        for (int j=i+1; j<n; j++) {
-            if (A[j].total > A[k].total) {
-                k=j;
+// void selectionSort(int n, struct Student A[]) {
+//     for (int i=0; i<n-1; i++) {
+//         int k=i;
+//         for (int j=i+1; j<n; j++) {
+//             if (A[j].total > A[k].total) {
+//                 k=j;
+//             }
+//         }
+//         if (i != k) {
+//             struct Student temp = A[i];
+//             A[i]=A[k];
+//             A[k]=temp;
+//         }
+//     }
+// }
+
+void countingSort(int n, struct Student A[]){
+    int temp[300] = {0};
+    for(int i=0;i<n-1;i++){
+        temp[A[i].total]++;
+    }
+
+    for(int j=300; j>0;j--){
+        if(temp[j]!=0){
+            for (int k = 0; k < temp[j]; k++)
+            {
+                printf("%d\n",j);
             }
-        }
-        if (i != k) {
-            struct Student temp = A[i];
-            A[i]=A[k];
-            A[k]=temp;
+            
+            
         }
     }
 }
@@ -59,13 +77,14 @@ int main() {
     for (int i = 0; i < N; i++) {
         students[i]=addStudent();
     }
-    for (int i=0;i<N;i++) {
-        printStudentInfo(students[i]);
-    }
-    selectionSort(N, students);
-    printf("#########################\nСОРТИРОВАННЫЕ\n################################:\n");
-    for (int i=0;i<N;i++) {
-        printStudentInfo(students[i]);
-    }
+    // for (int i=0;i<N;i++) {
+    //     printStudentInfo(students[i]);
+    // }
+    countingSort(N,students);
+    // selectionSort(N, students);
+    // printf("#########################\nСОРТИРОВАННЫЕ\n################################:\n");
+    // for (int i=0;i<N;i++) {
+    //     printStudentInfo(students[i]);
+    // }
 
 }
