@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-#define N 10
+#define N 1000
 
 struct Student
 {
@@ -86,11 +86,11 @@ void countingSort(int n, struct Student A[])
 
 void printResult(void (*sortFunc)(int, struct Student[]), int n, struct Student A[], const char *methodName)
 {
-    printf("------------------------ До сортировки ------------------------\n");
+    // printf("------------------------ До сортировки ------------------------\n");
     for (int i = 0; i < n; i++)
     {
         A[i] = addStudent();
-        printStudentInfo(A[i]);
+        // printStudentInfo(A[i]);
     }
 
     clock_t start = clock();
@@ -99,13 +99,36 @@ void printResult(void (*sortFunc)(int, struct Student[]), int n, struct Student 
 
     double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
 
-    printf("------------------------ После сортировки (%s) ------------------------\n", methodName);
-    for (int i = 0; i < n; i++)
-    {
-        printStudentInfo(A[i]);
-    }
+    // printf("------------------------ После сортировки (%s) ------------------------\n", methodName);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     printStudentInfo(A[i]);
+    // }
 
     printf("Сортиовка %s выполнена за: %f сек, для %d элементов\n\n", methodName, time_spent, N);
+
+}
+
+int quickSort(struct Student A[], int left, int right){
+    if (left>=right) return 0;
+    int pivot, i, j;
+    i=left;
+    j=right;
+    pivot = A[(left+right)/2].total;
+    while(i<=j){
+       while(A[i].total>pivot)i++;
+        while(A[j].total<pivot)j--;
+        if (i<=j){
+        struct Student temp = A[i];
+        A[i]=A[j];
+        A[j]=temp;
+        i++;
+        j--;
+        
+    } 
+    quickSort(A, left, j);
+    quickSort(A, i, right);
+    }
 
 }
 
@@ -119,8 +142,28 @@ int main()
 
     printResult(selectionSort, N, students, "Выборотм");
     printf("Размер данных массива: %ld байт\n", sizeof(students));
-    printResult(countingSort, N, students, "Подсчутом");
+    printResult(countingSort, N, students, "Подсчетом");
     printf("Размер данных массива: %ld байт\n", sizeof(students));
+    //  printf("------------------------ До сортировки ------------------------\n");
+    for (int i = 0; i < N; i++)
+    {
+        students[i] = addStudent();
+        // printStudentInfo(students[i]);
+    }
+
+    clock_t start = clock();
+    quickSort(students, 0, N-1);
+    clock_t end = clock();
+
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+
+    // printf("------------------------ После сортировки (быстрая) ------------------------\n");
+    // for (int i = 0; i <N; i++)
+    // {
+    //     printStudentInfo(students[i]);
+    // }
+
+    printf("Сортиовка быстрая выполнена за: %f сек, для %d элементов\n\n",time_spent, N);
 
     return 0;
 }
