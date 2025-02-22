@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-#define N 1000
+#define N 50000
 
 struct Student
 {
@@ -109,27 +109,27 @@ void printResult(void (*sortFunc)(int, struct Student[]), int n, struct Student 
 
 }
 
-int quickSort(struct Student A[], int left, int right){
-    if (left>=right) return 0;
-    int pivot, i, j;
-    i=left;
-    j=right;
-    pivot = A[(left+right)/2].total;
-    while(i<=j){
-       while(A[i].total>pivot)i++;
-        while(A[j].total<pivot)j--;
-        if (i<=j){
-        struct Student temp = A[i];
-        A[i]=A[j];
-        A[j]=temp;
-        i++;
-        j--;
-        
-    } 
-    quickSort(A, left, j);
-    quickSort(A, i, right);
+void quickSort(struct Student A[], int left, int right) {
+    if (left >= right) return;
+
+    int pivot = A[(left + right) / 2].total;
+    int i = left, j = right;
+
+    while (i <= j) {
+        while (A[i].total > pivot) i++;
+        while (A[j].total < pivot) j--;
+
+        if (i <= j) {
+            struct Student temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+            i++;
+            j--;
+        }
     }
 
+    if (left < j) quickSort(A, left, j);
+    if (i < right) quickSort(A, i, right);
 }
 
 int main()
