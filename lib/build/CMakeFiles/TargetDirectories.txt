@@ -1,0 +1,4 @@
+/mnt/c/Users/Nikita/Desktop/lib/build/CMakeFiles/funcs.dir
+/mnt/c/Users/Nikita/Desktop/lib/build/CMakeFiles/main.dir
+/mnt/c/Users/Nikita/Desktop/lib/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Nikita/Desktop/lib/build/CMakeFiles/rebuild_cache.dir
