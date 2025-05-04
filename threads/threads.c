@@ -17,15 +17,7 @@ typedef struct
     int thread_num;
     const char *messages[N + 1];
 } thread_data_t;
-typedef struct
-{
-    int n;
-    int start_row;
-    int end_row;
-    int (*A)[N];
-    int (*B)[N];
-    int (*C)[N];
-} matrix_thread_data;
+
 
 void exit_func(void *arg)
 {
@@ -60,49 +52,6 @@ void *child(void *arg)
     }
 
     pthread_cleanup_pop(0);
-    return NULL;
-}
-
-void FillMatrix(int n, int Mat[n][n])
-{
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            Mat[i][j] = 1;
-        }
-    }
-}
-
-void PrintMatrix(int n, int Mat[n][n])
-{
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            printf("%d ", Mat[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-void *multiply_thread(void *arg)
-{
-    matrix_thread_data *data = (matrix_thread_data *)arg;
-
-    for (int i = data->start_row; i < data->end_row; i++)
-    {
-        for (int j = 0; j < data->n; j++)
-        {
-            data->C[i][j] = 0;
-            for (int k = 0; k < data->n; k++)
-            {
-                data->C[i][j] += data->A[i][k] * data->B[k][j];
-            }
-        }
-    }
-
     return NULL;
 }
 
@@ -145,61 +94,4 @@ int main(void)
     {
         pthread_join(string_threads[i], NULL);
     }
-    int n;
-    int matrix_threads;
-    printf("Введите размер матрицы: ");
-    scanf("%d", &n);
-    printf("Введите количество потоков: ");
-    scanf("%d", &matrix_threads);
-
-    int (*A)[n] = malloc(sizeof(int[n][n]));
-    int (*B)[n] = malloc(sizeof(int[n][n]));
-    int (*C)[n] = malloc(sizeof(int[n][n]));
-    FillMatrix(n, A);
-    FillMatrix(n, B);
-
-    pthread_t threads[matrix_threads];
-    matrix_thread_data thread_data_m[matrix_threads];
-
-    int rows_per_thread = n / matrix_threads;
-    int current_row = 0;
-    for (int i = 0; i < matrix_threads; i++)
-    {
-        thread_data_m[i].n = n;
-        thread_data_m[i].A = A;
-        thread_data_m[i].B = B;
-        thread_data_m[i].C = C;
-        thread_data_m[i].start_row = current_row;
-        thread_data_m[i].end_row = current_row + rows_per_thread;
-        current_row += rows_per_thread;
-
-        pthread_create(&threads[i], NULL, multiply_thread, &thread_data_m[i]);
-    }
-
-    for (int i = 0; i < matrix_threads; i++)
-    {
-        pthread_join(threads[i], NULL);
-    }
-
-    if (n < 5)
-    {
-        printf("\nМатрица A:\n");
-        PrintMatrix(n, A);
-
-        printf("Матрица B:\n");
-        PrintMatrix(n, B);
-
-        printf("Результат умножения:\n");
-        PrintMatrix(n, C);
-    }
-    else
-    {
-        printf("\nРазмер матрицы слишком большой для вывода.\n");
-    }
-
-    free(A);
-    free(B);
-    free(C);
-
-    return 0;
 }
