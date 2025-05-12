@@ -119,6 +119,7 @@ static void test_generateCiuraSequenceAsString(void **state) {
 }
 
 int main(void) {
+    // Убираем установку формата вывода
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(test_FillInc),
         cmocka_unit_test(test_FillDec),
@@ -133,5 +134,6 @@ int main(void) {
         cmocka_unit_test(test_generateShellSequenceAsString),
         cmocka_unit_test(test_generateCiuraSequenceAsString),
     };
+
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
