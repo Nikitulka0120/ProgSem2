@@ -1,4 +1,0 @@
-/mnt/c/Users/Nikita/Desktop/saod & prog/prog/tests/build/CMakeFiles/test_sorting.dir
-/mnt/c/Users/Nikita/Desktop/saod & prog/prog/tests/build/CMakeFiles/test.dir
-/mnt/c/Users/Nikita/Desktop/saod & prog/prog/tests/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Nikita/Desktop/saod & prog/prog/tests/build/CMakeFiles/rebuild_cache.dir
